@@ -6,7 +6,33 @@ import * as helmet from "helmet";
 import * as cors from "cors";
 import routes from "./routes";
 
-createConnection().then(async connection => {
+const dotenv = require('dotenv');
+dotenv.config();
+
+createConnection({
+    type: "mysql",
+    host: process.env.DB_HOST,
+    port: 3306,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    synchronize: true,
+    logging: false,
+    entities: [
+       "src/entity/**/*.ts"
+    ],
+    migrations: [
+       "src/migration/**/*.ts"
+    ],
+    subscribers: [
+       "src/subscriber/**/*.ts"
+    ],
+    cli: {
+       entitiesDir: "src/entity",
+       migrationsDir: "src/migration",
+       subscribersDir: "src/subscriber"
+    }
+ }).then(async connection => {
 
     // Create a new express application instance
     const app = express();

@@ -7,7 +7,7 @@ class SubjectController{
 
     static listAll = async (req: Request, res: Response) => {
         
-        let userId = res.locals.jwtPayload.userId;
+        const userId = res.locals.jwtPayload.userId;
         const subjectRepository = getRepository(Subject);
 
         const subjects = await subjectRepository.find({
