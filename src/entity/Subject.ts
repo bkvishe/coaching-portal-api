@@ -1,5 +1,8 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Unique} from "typeorm";
+import { IsNotEmpty, IsOptional } from 'class-validator';
+
 @Entity()
+@Unique(["name"])
 export class Subject {
     
     @PrimaryGeneratedColumn()
@@ -8,29 +11,32 @@ export class Subject {
     @Column({
         length: 100
     })
+    @IsNotEmpty()
     name: string;
     
-    @Column("text")
+    @Column({
+        type: 'text',
+        nullable: true 
+    })
+    @IsOptional()
     description: string;
     
     @Column("int")
     createdBy: number;
     
-    @Column("int")
-    updatedBy: number;
-    
-    @Column({ 
-        type: 'timestamp', 
-        default: () => 'CURRENT_TIMESTAMP'
-    })
-    createdAt: string;
-
-    @Column({ 
-        type: 'timestamp', 
-        onUpdate: 'CURRENT_TIMESTAMP', 
+    @Column({
+        type: 'int',
         nullable: true 
     })
-    updatedAt: string;
+    updatedBy: number;
+    
+    @Column()
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @Column()
+    @UpdateDateColumn()
+    updatedAt: Date;
 }
 
 export default Subject;

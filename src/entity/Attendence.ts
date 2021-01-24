@@ -12,11 +12,9 @@ export class Attendence {
     @Column("int")
     public subjectId: number;    
 
-    @Column({ 
-        type: 'timestamp', 
-        default: () => 'CURRENT_TIMESTAMP'
-    })
-    createdAt: string;
+    @Column()
+    @CreateDateColumn()
+    createdAt: Date;
 
 }
 
