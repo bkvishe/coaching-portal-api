@@ -1,8 +1,7 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Unique} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
 @Entity()
-@Unique(["name"])
 export class Subject {
     
     @PrimaryGeneratedColumn()

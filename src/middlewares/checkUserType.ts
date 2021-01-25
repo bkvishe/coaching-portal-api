@@ -3,7 +3,7 @@ import { getRepository } from "typeorm";
 
 import { User } from "../entity/User";
 
-export const checkUserType = (roles: Array<string>) => {
+export const checkUserType = (types: Array<string>) => {
 
   return async (req: Request, res: Response, next: NextFunction) => {
     
@@ -13,7 +13,7 @@ export const checkUserType = (roles: Array<string>) => {
     
     const userRepository = getRepository(User);
     let user: User;
-    
+
     try {
       user = await userRepository.findOneOrFail(id);
     } catch (id) {
@@ -21,7 +21,7 @@ export const checkUserType = (roles: Array<string>) => {
     }
 
     //Check if array of authorized user types includes the user's type
-    if (roles.indexOf(user.userType) > -1) 
+    if (types.indexOf(user.userType) > -1) 
       next();
     else 
       res.status(403).send();
